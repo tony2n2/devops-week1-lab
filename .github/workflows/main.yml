@@ -1,8 +1,7 @@
 name: Builb Test and push
 on: [push]
 env:
-  IMAGE_NAME: service
-  REPO_NAME: devops-week1-lab
+  IMAGE_NAME: devops-week1-lab
   USERNAME: tonynanuvanl
 
 
@@ -14,10 +13,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build docker
       run: |
-        docker build . -t $USERNAME/$REPO_NAME/$IMAGE_NAME
+        docker build . -t $USERNAME/$IMAGE_NAME
     - name: run docker
       run: |
-        docker run -d -e 8080:8080 -host=172.17.0.2 $USERNAME/$REPO_NAME/$IMAGE_NAME:latest && \
+        docker run -d -e 8080:8080 -host=172.17.0.2 $USERNAME/$IMAGE_NAME:latest && \
           docker ps && sleep 5
 
     - name: Run API Tests
@@ -40,4 +39,4 @@ jobs:
 
     - name: Push image to docker hub Container Registry
       run: |
-        docker push $USERNAME/$REPO_NAME/$IMAGE_NAME
+        docker push $USERNAME/$IMAGE_NAME
